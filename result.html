@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .result h3 {
+            margin-bottom: 10px;
+        }
+        .result img {
+            max-width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Result</h1>
+        <div class="result">
+            <h3>Uploaded Image:</h3>
+            <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+            <h3>Prediction:</h3>
+            <p>
+                {% set threshold = 0.5 %}  {# Set a threshold for accuracy #}
+                {% set max_prediction = prediction[0] if prediction[0] >= prediction[1] and prediction[0] >= prediction[2] else prediction[1] if prediction[1] >= prediction[2] else prediction[2] %}
+                {% set predicted_class = 'pre' if max_prediction == prediction[0] else 'pro' if max_prediction == prediction[1] else 'early' %}
+                {% set accuracy = max_prediction * 100 %}  {# Convert probability to percentage #}
+                
+                <p>Predicted Class: {{ predicted_class }}</p>
+                <p>Predicted Accuracy: {{ accuracy }}%</p>
+                
+                
+                
+            </p>
+        </div>
+    </div>
+</body>
+</html>
